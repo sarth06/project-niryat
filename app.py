@@ -200,8 +200,7 @@ if st.sidebar.button("Run Live Crisis Analytics Pipeline"):
             st.markdown("---")
             st.markdown("### 🤖 Agentic Action Blueprint & Governance")
             
-        
-            st.info(f"🛡️ **CDSCO Regulatory Status:** {context_payload['cdsco_status']} | **Cryptographic Verification Hash:** `{crypto_hash[:32]}`")
+        st.info(f"🛡️ CDSCO Regulatory Status: {context_payload['cdsco_status']} | Cryptographic Verification Hash: {crypto_hash[:32]}")
         CO Regulatory Status:** {context['cdsco_status']} | **Cryptographic Verification Hash:** `{crypto_hash[:32]}`")
             
             st.markdown("**Automated Communication Framework Draft:**")
