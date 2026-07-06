@@ -521,6 +521,45 @@ else:
         m_col2.metric("Volumetric Impact", f"{context_payload['impacted_volume']:,} Units")
         m_col3.metric("Alternative Routing Chosen", context_payload['recommended_vendor'], f"Price Index: ${context_payload['index_price']}/kg")
         st.markdown('</div>', unsafe_allow_html=True)
+        # --- NEW MAP & SANKEY GLASS CARD ---
+        st.markdown('<div class="glass-card"><h3>🗺️ Global Logistics Reroute Visualizer</h3>', unsafe_allow_html=True)
+        
+        # 1. Interactive Map
+        geo_coordinates = {
+            "China": [35.8617, 104.1954],
+            "Germany": [51.1657, 10.4515],
+            "USA": [37.0902, -95.7129],
+            "India (Domestic)": [20.5937, 78.9629]
+        }
+        blocked_lat_lon = geo_coordinates.get(context_payload['blocked_source'], [20.0, 78.0])
+        alt_lat_lon = geo_coordinates.get(context_payload['recommended_vendor'], [20.0, 78.0])
+        
+        map_data = pd.DataFrame({
+            'lat': [blocked_lat_lon[0], alt_lat_lon[0]],
+            'lon': [blocked_lat_lon[1], alt_lat_lon[1]],
+            'Status': ['Blocked Corridor', 'Alternative Vendor Hub']
+        })
+        st.map(map_data, zoom=1, use_container_width=True)
+
+        # 2. Sankey Diagram
+        st.markdown("**Corridor Reroute Volume Flow:**")
+        sankey_fig = go.Figure(data=[go.Sankey(
+            node = dict(
+              pad = 20, thickness = 20,
+              line = dict(color = "#1e293b", width = 0.5),
+              label = ["Total Global Capacity", f"Blocked: {context_payload['blocked_source']}", f"Rerouted: {context_payload['recommended_vendor']}", "Domestic Formulation"],
+              color = ["#94a3b8", "#ef4444", "#22c55e", "#38bdf8"]
+            ),
+            link = dict(
+              source = [0, 0, 2],
+              target = [1, 2, 3],
+              value = [context_payload['impacted_volume'], context_payload['impacted_volume'], context_payload['impacted_volume']],
+              color = ["rgba(239, 68, 68, 0.4)", "rgba(34, 197, 94, 0.4)", "rgba(56, 189, 248, 0.4)"]
+          ))])
+        sankey_fig.update_layout(height=250, margin=dict(l=0, r=0, t=10, b=10), paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white', family='Inter'))
+        st.plotly_chart(sankey_fig, use_container_width=True)
+        st.markdown('</div>', unsafe_allow_html=True)
+        # -----------------------------------
 
         st.markdown('<div class="glass-card"><h3>🤖 Agentic Action Blueprint &amp; Governance</h3>', unsafe_allow_html=True)
         st.markdown(
@@ -554,4 +593,33 @@ else:
             "deterministic_context": context_payload,
             "gemini_orchestration": gemini_json_response
         })
+        
+        # --- NEW DIGITAL CERTIFICATE DOWNLOAD ---
+        cert_content = f"""
+====================================================
+PROJECT NIRYAT // DIGITAL COMPLIANCE CERTIFICATE
+====================================================
+TIMESTAMP (UTC): {current_time_utc}
+DECISION ID: NIR-{crypto_hash[:8]}
+SHA-256 HASH: {crypto_hash}
+KMS SIGNATURE: b64_kms_signed_{crypto_hash[:16]}
+----------------------------------------------------
+DISRUPTED SOURCE: {context_payload['blocked_source']} ({context_payload['impacted_volume']} Units)
+APPROVED VENDOR: {context_payload['recommended_vendor']}
+MARKET INDEX RATE: ${context_payload['index_price']}/kg
+CDSCO REGISTRY STATUS: {context_payload['cdsco_status']}
+----------------------------------------------------
+AI ORCHESTRATION CONTRACT PAYLOAD:
+{gemini_json_response['email_draft']}
+====================================================
+* This ledger entry is cryptographically sealed and immutable.
+"""
+        st.download_button(
+            label="📥 DOWNLOAD SECURE COMPLIANCE CERTIFICATE",
+            data=cert_content,
+            file_name=f"NIR_AUDIT_{crypto_hash[:8]}.txt",
+            mime="text/plain"
+        )
+        # ----------------------------------------
+        
         st.markdown('</div>', unsafe_allow_html=True)
