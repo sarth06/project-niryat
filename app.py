@@ -134,12 +134,21 @@ if st.sidebar.button("Run Live Crisis Analytics Pipeline"):
             "computed_score": round(float(best_decision['supplier_score']), 1)
         }
 
-        # --- 3. AGENTIC ORCHESTRATION VIA GEMINI ---
+       # --- 3. AGENTIC ORCHESTRATION VIA GEMINI ---
         gemini_json_response = {}
-        if api_key_input:
+        
+        # Secure API Key Routing: Check sidebar first, then check secure cloud secrets
+        final_api_key = api_key_input
+        if not final_api_key:
+            try:
+                final_api_key = st.secrets["GEMINI_API_KEY"]
+            except:
+                pass
+
+        if final_api_key:
             try:
                 import google.generativeai as genai
-                genai.configure(api_key=api_key_input)
+                genai.configure(api_key=final_api_key)
                 model = genai.GenerativeModel('gemini-1.5-pro', generation_config={"response_mime_type": "application/json"})
                 
                 prompt = f"""
