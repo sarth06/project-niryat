@@ -331,7 +331,7 @@ def call_gemini_agent(api_key: Optional[str], context_payload: Dict[str, Any]) -
     try:
         import google.generativeai as genai
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         prompt = f"""
         You are an enterprise procurement orchestration agent. Analyze this verified deterministic supply chain context:
         {json.dumps(context_payload)}
