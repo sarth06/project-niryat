@@ -19,7 +19,7 @@ st.markdown("""
     div[data-testid="stMetricValue"] { color: #f8fafc; font-size: 28px; }
     div[data-testid="stMetricLabel"] { color: #94a3b8; font-size: 12px; text-transform: uppercase; }
     </style>
-""", unsafe_allowed_html=True)
+""", unsafe_allow_html=True)
 
 # --- 1. HARDWARE ACCELERATION INTERACTION LAYER ---
 try:
