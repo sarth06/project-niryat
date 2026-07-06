@@ -149,8 +149,7 @@ if st.sidebar.button("Run Live Crisis Analytics Pipeline"):
             try:
                 import google.generativeai as genai
                 genai.configure(api_key=final_api_key)
-                model = genai.GenerativeModel('gemini-1.5-pro', generation_config={"response_mime_type": "application/json"})
-                
+                model = genai.GenerativeModel('gemini-1.5-flash', generation_config={"response_mime_type": "application/json"})                
                 prompt = f"""
                 You are an enterprise procurement orchestration agent. Analyze this verified deterministic supply chain context:
                 {json.dumps(context_payload)}
