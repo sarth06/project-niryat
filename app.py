@@ -41,8 +41,8 @@ else:
     st.sidebar.info("🔵 Standard CPU Runtime Active (Simulated Accelerator Mode)")
 
 # Title Banner
-st.markdown("<h1 style='color: #38bdf8; margin-bottom: 0;'>🛡️ Project Niryat // Supply Chain Command Center</h1>", unsafe_allowed_html=True)
-st.markdown("<p style='color: #94a3b8;'>Deterministic GPU Compliance Mechanics combined with Generative AI Orchestration</p>", unsafe_allowed_html=True)
+st.markdown("<h1 style='color: #38bdf8; margin-bottom: 0;'>🛡️ Project Niryat // Supply Chain Command Center</h1>", unsafe_allow_html=True)
+st.markdown("<p style='color: #94a3b8;'>Deterministic GPU Compliance Mechanics combined with Generative AI Orchestration</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 # --- 2. PIPELINE EXECUTION ENGINE ---
