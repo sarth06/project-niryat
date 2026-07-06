@@ -1,6 +1,6 @@
 """
 Project Niryat // Supply Chain Command Center
-Enterprise UI/UX refactor.
+Enterprise UI/UX refactor — Diamond Polish Pass.
 
 STRICT PRESERVATION NOTE:
 All mathematical logic, the supplier_score formula, true_price_variance
@@ -34,6 +34,7 @@ st.set_page_config(
 
 # ==========================================================
 # ENTERPRISE STYLING — Glassmorphism / Slate palette / Inter
+# (Diamond Polish: refined spacing, hover states, typography contrast)
 # ==========================================================
 st.markdown(
     """
@@ -49,6 +50,15 @@ st.markdown(
         color: #e2e8f0;
     }
 
+    /* Give the whole canvas room to breathe on large screens */
+    .block-container {
+        padding-top: 2.2rem;
+        padding-bottom: 3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        max-width: 1400px;
+    }
+
     /* Sidebar */
     section[data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0d1526 0%, #0a0f1d 100%);
@@ -59,22 +69,27 @@ st.markdown(
         color: #e2e8f0;
         letter-spacing: 0.02em;
     }
+    section[data-testid="stSidebar"] .block-container {
+        padding-top: 1.6rem;
+    }
 
     /* Header */
     .niryat-title {
-        font-size: 2.05rem;
+        font-size: 2.15rem;
         font-weight: 800;
         letter-spacing: -0.02em;
+        line-height: 1.25;
         background: linear-gradient(90deg, #38bdf8 0%, #22d3ee 55%, #34d399 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        margin-bottom: 0.15rem;
+        margin-bottom: 0.2rem;
     }
     .niryat-subtitle {
-        color: #94a3b8;
-        font-size: 0.95rem;
+        color: #a7b6c8;
+        font-size: 0.98rem;
         font-weight: 500;
-        margin-bottom: 1.2rem;
+        margin-bottom: 1.6rem;
+        letter-spacing: 0.01em;
     }
 
     /* Glassmorphism section cards */
@@ -83,42 +98,62 @@ st.markdown(
         backdrop-filter: blur(14px);
         -webkit-backdrop-filter: blur(14px);
         border: 1px solid rgba(148, 163, 184, 0.14);
-        border-radius: 16px;
-        padding: 1.25rem 1.4rem;
+        border-radius: 18px;
+        padding: 1.5rem 1.65rem 1.35rem 1.65rem;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
-        margin-bottom: 1rem;
+        margin-bottom: 1.35rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .glass-card:hover {
+        border-color: rgba(148, 163, 184, 0.28);
+        box-shadow: 0 10px 38px rgba(0, 0, 0, 0.34);
     }
     .glass-card h3 {
         margin-top: 0;
+        margin-bottom: 1rem;
         font-weight: 700;
-        color: #f1f5f9;
-        font-size: 1rem;
-        letter-spacing: 0.01em;
+        color: #f8fafc;
+        font-size: 1.02rem;
+        letter-spacing: 0.02em;
         text-transform: uppercase;
-        opacity: 0.9;
+        opacity: 0.95;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+        padding-bottom: 0.6rem;
     }
 
-    /* Metric styling */
+    /* Metric styling — uniform cards */
     div[data-testid="stMetric"] {
         background: rgba(15, 23, 42, 0.55);
         border: 1px solid rgba(148, 163, 184, 0.12);
         border-radius: 12px;
-        padding: 0.85rem 1rem 0.6rem 1rem;
+        padding: 1rem 1.1rem 0.75rem 1.1rem;
+        height: 100%;
+        transition: border-color 0.15s ease;
+    }
+    div[data-testid="stMetric"]:hover {
+        border-color: rgba(56, 189, 248, 0.35);
     }
     div[data-testid="stMetricValue"] {
         color: #f8fafc;
-        font-size: 26px;
+        font-size: 27px;
         font-weight: 700;
+        letter-spacing: -0.01em;
     }
     div[data-testid="stMetricLabel"] {
-        color: #94a3b8;
+        color: #9fb0c3;
         font-size: 11.5px;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.07em;
     }
     div[data-testid="stMetricDelta"] {
         font-weight: 600;
+        font-size: 13px;
+    }
+
+    /* Keep sibling metric columns visually uniform in height */
+    div[data-testid="column"] > div > div[data-testid="stVerticalBlock"] {
+        height: 100%;
     }
 
     /* Buttons */
@@ -128,8 +163,8 @@ st.markdown(
         border: 1px solid rgba(148, 163, 184, 0.18);
         font-weight: 600;
         letter-spacing: 0.01em;
-        padding: 0.55rem 0.9rem;
-        transition: all 0.15s ease;
+        padding: 0.6rem 0.95rem;
+        transition: all 0.18s ease;
     }
     div[data-testid="column"]:nth-of-type(1) .stButton>button {
         background: linear-gradient(90deg, #16a34a, #22c55e);
@@ -137,7 +172,7 @@ st.markdown(
         box-shadow: 0 4px 14px rgba(34, 197, 94, 0.25);
     }
     div[data-testid="column"]:nth-of-type(1) .stButton>button:hover {
-        box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+        box-shadow: 0 6px 22px rgba(34, 197, 94, 0.42);
         transform: translateY(-1px);
     }
     div[data-testid="column"]:nth-of-type(2) .stButton>button {
@@ -147,11 +182,16 @@ st.markdown(
     }
     div[data-testid="column"]:nth-of-type(2) .stButton>button:hover {
         background: rgba(239, 68, 68, 0.22);
+        transform: translateY(-1px);
     }
     section[data-testid="stSidebar"] .stButton>button {
         background: linear-gradient(90deg, #0ea5e9, #22d3ee);
         color: #04121c;
         font-weight: 700;
+    }
+    section[data-testid="stSidebar"] .stButton>button:hover {
+        box-shadow: 0 6px 20px rgba(14, 165, 233, 0.35);
+        transform: translateY(-1px);
     }
 
     /* Code / email draft block */
@@ -163,21 +203,33 @@ st.markdown(
     /* Divider */
     hr {
         border-color: rgba(148, 163, 184, 0.14);
+        margin: 1.1rem 0;
     }
 
     /* Badge chips */
     .niryat-chip {
         display: inline-block;
-        padding: 3px 10px;
+        padding: 4px 12px;
         border-radius: 999px;
         font-size: 11.5px;
         font-weight: 700;
         letter-spacing: 0.03em;
-        margin-right: 6px;
+        margin-right: 8px;
+        margin-bottom: 4px;
     }
     .chip-green { background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.35);}
     .chip-blue  { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.35);}
     .chip-amber { background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);}
+
+    /* Tooltip icon contrast fix for dark theme */
+    [data-testid="stTooltipIcon"] svg {
+        opacity: 0.75;
+    }
+
+    /* Map container corner rounding to match cards */
+    .stApp iframe {
+        border-radius: 12px;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -406,16 +458,17 @@ def run_full_pipeline(sim_rows: int, api_key: Optional[str]) -> Dict[str, Any]:
 
 
 # ==========================================================
-# SIDEBAR
+# SIDEBAR (Diamond Polish: added descriptive help tooltips)
 # ==========================================================
 st.sidebar.title("🛡️ Controls & Configuration")
 st.sidebar.markdown("---")
 api_key_input = st.sidebar.text_input(
     "Google Gemini API Key", type="password",
-    help="Provide an active API key for live orchestration."
+    help="Paste an active Gemini API key to enable live AI orchestration of the spot-buy contract draft. Leave blank to use the deterministic local fallback engine — the app remains fully functional either way."
 )
 sim_rows = st.sidebar.slider(
-    "Simulated Manifest Count", min_value=100000, max_value=5000000, value=5000000, step=100000
+    "Simulated Manifest Count", min_value=100000, max_value=5000000, value=5000000, step=100000,
+    help="Number of synthetic shipping manifest rows to generate and process. Higher counts showcase the CPU-vs-GPU acceleration gap more dramatically."
 )
 
 st.sidebar.markdown("### System Hardware Profile")
@@ -424,7 +477,10 @@ if GPU_AVAILABLE:
 else:
     st.sidebar.info("🔵 Standard CPU Runtime Active (Simulated Accelerator Mode)")
 
-run_clicked = st.sidebar.button("🚀 Run Live Crisis Analytics Pipeline")
+run_clicked = st.sidebar.button(
+    "🚀 Run Live Crisis Analytics Pipeline",
+    help="Executes the full decision intelligence pipeline: manifest ingestion, CPU/GPU benchmark, CDSCO compliance join, Gemini orchestration, and cryptographic sealing."
+)
 
 # ==========================================================
 # HEADER
@@ -479,7 +535,7 @@ else:
     crypto_hash = result["crypto_hash"]
     current_time_utc = result["current_time_utc"]
 
-    col1, col2 = st.columns([1, 2])
+    col1, col2 = st.columns([1, 2], gap="large")
 
     with col1:
         st.markdown('<div class="glass-card"><h3>📊 Performance Benchmark</h3>', unsafe_allow_html=True)
@@ -503,10 +559,11 @@ else:
             height=300,
             margin=dict(l=10, r=10, t=30, b=10),
             legend=dict(orientation='h', yanchor='bottom', y=1.02, xanchor='right', x=1),
-            yaxis=dict(gridcolor='rgba(148,163,184,0.15)', title='Seconds'),
+            yaxis=dict(gridcolor='rgba(148,163,184,0.15)', title='Seconds', zerolinecolor='rgba(148,163,184,0.15)'),
             xaxis=dict(showgrid=False),
+            hoverlabel=dict(bgcolor='#0f172a', font_color='#e2e8f0', bordercolor='rgba(148,163,184,0.3)'),
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
         st.markdown('</div>', unsafe_allow_html=True)
 
         st.metric("Acceleration Factor Obtained", f"{cpu_time / gpu_time:.1f}x Faster Execution")
@@ -516,14 +573,14 @@ else:
 
     with col2:
         st.markdown('<div class="glass-card"><h3>🚨 Detected Supply Chain Anomaly</h3>', unsafe_allow_html=True)
-        m_col1, m_col2, m_col3 = st.columns(3)
+        m_col1, m_col2, m_col3 = st.columns(3, gap="medium")
         m_col1.metric("Disrupted Molecule", context_payload['molecule'], f"Source: {context_payload['blocked_source']}")
         m_col2.metric("Volumetric Impact", f"{context_payload['impacted_volume']:,} Units")
         m_col3.metric("Alternative Routing Chosen", context_payload['recommended_vendor'], f"Price Index: ${context_payload['index_price']}/kg")
         st.markdown('</div>', unsafe_allow_html=True)
-        # --- NEW MAP & SANKEY GLASS CARD ---
+        # --- MAP & SANKEY GLASS CARD ---
         st.markdown('<div class="glass-card"><h3>🗺️ Global Logistics Reroute Visualizer</h3>', unsafe_allow_html=True)
-        
+
         # 1. Interactive Map
         geo_coordinates = {
             "China": [35.8617, 104.1954],
@@ -533,7 +590,7 @@ else:
         }
         blocked_lat_lon = geo_coordinates.get(context_payload['blocked_source'], [20.0, 78.0])
         alt_lat_lon = geo_coordinates.get(context_payload['recommended_vendor'], [20.0, 78.0])
-        
+
         map_data = pd.DataFrame({
             'lat': [blocked_lat_lon[0], alt_lat_lon[0]],
             'lon': [blocked_lat_lon[1], alt_lat_lon[1]],
@@ -556,8 +613,15 @@ else:
               value = [context_payload['impacted_volume'], context_payload['impacted_volume'], context_payload['impacted_volume']],
               color = ["rgba(239, 68, 68, 0.4)", "rgba(34, 197, 94, 0.4)", "rgba(56, 189, 248, 0.4)"]
           ))])
-        sankey_fig.update_layout(height=250, margin=dict(l=0, r=0, t=10, b=10), paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white', family='Inter'))
-        st.plotly_chart(sankey_fig, use_container_width=True)
+        sankey_fig.update_layout(
+            height=250,
+            margin=dict(l=0, r=0, t=10, b=10),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(color='#e2e8f0', family='Inter', size=12),
+            hoverlabel=dict(bgcolor='#0f172a', font_color='#e2e8f0', bordercolor='rgba(148,163,184,0.3)'),
+        )
+        st.plotly_chart(sankey_fig, use_container_width=True, config={"displayModeBar": False})
         st.markdown('</div>', unsafe_allow_html=True)
         # -----------------------------------
 
@@ -576,10 +640,16 @@ else:
             st.markdown(f"- *{rationale}*")
 
         st.markdown("---")
-        g1, g2 = st.columns(2)
-        if g1.button("✅ APPROVE ALLOCATIONS & EXECUTE VIA GATEWAY"):
+        g1, g2 = st.columns(2, gap="medium")
+        if g1.button(
+            "✅ APPROVE ALLOCATIONS & EXECUTE VIA GATEWAY",
+            help="Confirms this AI-recommended allocation and routes it to the procurement execution gateway for processing."
+        ):
             st.toast("Allocation approved and routed to gateway.", icon="✅")
-        if g2.button("❌ ABORT AND ESCALATE ROUTING TO LEGAL"):
+        if g2.button(
+            "❌ ABORT AND ESCALATE ROUTING TO LEGAL",
+            help="Halts this recommendation and escalates the decision to the legal/compliance review queue instead of executing it."
+        ):
             st.toast("Escalated to legal review queue.", icon="⚠️")
         st.markdown('</div>', unsafe_allow_html=True)
 
@@ -593,8 +663,8 @@ else:
             "deterministic_context": context_payload,
             "gemini_orchestration": gemini_json_response
         })
-        
-        # --- NEW DIGITAL CERTIFICATE DOWNLOAD ---
+
+        # --- DIGITAL CERTIFICATE DOWNLOAD ---
         cert_content = f"""
 ====================================================
 PROJECT NIRYAT // DIGITAL COMPLIANCE CERTIFICATE
@@ -618,8 +688,9 @@ AI ORCHESTRATION CONTRACT PAYLOAD:
             label="📥 DOWNLOAD SECURE COMPLIANCE CERTIFICATE",
             data=cert_content,
             file_name=f"NIR_AUDIT_{crypto_hash[:8]}.txt",
-            mime="text/plain"
+            mime="text/plain",
+            help="Downloads a timestamped, hash-sealed .txt certificate documenting this decision for regulatory and audit purposes."
         )
         # ----------------------------------------
-        
+
         st.markdown('</div>', unsafe_allow_html=True)
