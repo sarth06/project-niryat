@@ -189,11 +189,16 @@ if st.sidebar.button("Run Live Crisis Analytics Pipeline"):
             st.metric("Acceleration Factor Obtained", f"{cpu_time/gpu_time:.1f}x Faster Execution")
 
        
-        with col2:
-           st.markdown("---")
+      with col2:
+            st.markdown("### 🚨 Detected Supply Chain Anomaly")
+            m_col1, m_col2, m_col3 = st.columns(3)
+            m_col1.metric("Disrupted Molecule", context_payload['molecule'], f"Source: {context_payload['blocked_source']}")
+            m_col2.metric("Volumetric Impact", f"{context_payload['impacted_volume']:,} Units")
+            m_col3.metric("Alternative Routing Chosen", context_payload['recommended_vendor'], f"Price Index: ${context_payload['index_price']}/kg")
+
+            st.markdown("---")
             st.markdown("### 🤖 Agentic Action Blueprint & Governance")
             
-            # PERFECTLY TERMINATED STRING LITERAL WITH PROPER VARIABLE BINDING
             st.info(f"🛡️ CDSCO Regulatory Status: {context_payload['cdsco_status']} | Cryptographic Verification Hash: {crypto_hash[:32]}")
             
             st.markdown("**Automated Communication Framework Draft:**")
