@@ -338,7 +338,7 @@ def call_gemini_agent(api_key: Optional[str], context_payload: Dict[str, Any]) -
 
         Generate a structured JSON configuration response containing exactly:
         1. "routing_action": ("QUEUE_FOR_HUMAN_APPROVAL" if cdsco_status is "VERIFIED_DMF_ACTIVE" and historical_reliability >= 0.85 else "HARD_STOP_ROUTING")
-        2. "email_draft": "A concise, executive-level procurement contract notification to the alternative supplier hub."
+        2. "email_draft": "Write a concise, 2-sentence executive-level procurement contract notification to the alternative supplier hub requesting an emergency spot-buy."
         3. "decision_rationale": [An array of exactly 2 analytical sentences based strictly on the metrics passed.]
         """
         response = model.generate_content(prompt)
