@@ -189,7 +189,7 @@ if st.sidebar.button("Run Live Crisis Analytics Pipeline"):
             st.metric("Acceleration Factor Obtained", f"{cpu_time/gpu_time:.1f}x Faster Execution")
 
        
-      with col2:
+        with col2:
             st.markdown("### 🚨 Detected Supply Chain Anomaly")
             m_col1, m_col2, m_col3 = st.columns(3)
             m_col1.metric("Disrupted Molecule", context_payload['molecule'], f"Source: {context_payload['blocked_source']}")
